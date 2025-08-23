@@ -129,17 +129,20 @@ arrow_forward_ios
 
 <script>
     let src="https://wildlifevagabond.com/wp-content/uploads/2023/08/IMG_1376-2-Edit-2.jpg";
-    let para ="The western black rhinoceros (Diceros bicornis longipes) is a subspecies of the black rhinoceros that was declared extinct by the International Union for Conservation of Nature (IUCN) in 2011. It was native to the savannas and grasslands of western and central Africa, particularly in countries such as Cameroon, Chad, and Nigeria.";
+    let paragraphs =["The western black rhinoceros (Diceros bicornis longipes) is a subspecies of the black rhinoceros that was declared extinct by the International Union for Conservation of Nature (IUCN) in 2011. It was native to the savannas and grasslands of western and central Africa, particularly in countries such as Cameroon, Chad, and Nigeria.","The western black rhinoceros was a herbivorous animal that primarily fed on a variety of vegetation, including leaves, shoots, fruits, and branches. It had a prehensile upper lip that allowed it to grasp and manipulate vegetation effectively. The diet of the western black rhino varied depending on the season and availability of food sources in its habitat."];
+    let para=paragraphs[0];
     let counter = 1;
-    let subhead = "Area of Origin";
+    let headings = ["Area of Origin","Diet"];
+    let subhead = headings[0];
     function increase(){
-        para="The western black rhinoceros was a herbivorous animal that primarily fed on a variety of vegetation, including leaves, shoots, fruits, and branches. It had a prehensile upper lip that allowed it to grasp and manipulate vegetation effectively. The diet of the western black rhino varied depending on the season and availability of food sources in its habitat.";
         counter = 2;
-        subhead = "Diet";
+        para=paragraphs[counter-1];
+        
+        subhead = headings[counter-1];
     }
     function decrease(){
-        para="The western black rhinoceros (Diceros bicornis longipes) is a subspecies of the black rhinoceros that was declared extinct by the International Union for Conservation of Nature (IUCN) in 2011. It was native to the savannas and grasslands of western and central Africa, particularly in countries such as Cameroon, Chad, and Nigeria.";
         counter = 1 ;
-        subhead = "Area of Origin";
+        para=paragraphs[counter-1];
+        subhead = headings[counter-1];
     }
 </script>
