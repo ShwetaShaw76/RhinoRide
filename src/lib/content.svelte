@@ -1,4 +1,48 @@
 
+<script>
+    let cards = ["https://wildlifevagabond.com/wp-content/uploads/2023/08/IMG_1376-2-Edit-2.jpg","https://images.squarespace-cdn.com/content/v1/5f1ab4309bd4b45e29ec3e4b/1620028456080-SYTABOMMEFAITUXE8F4I/black-rhino-eating.jpeg","https://a-z-animals.com/media/2022/02/shutterstock_1175506429.jpg","https://i2-prod.birminghammail.co.uk/incoming/article28580361.ece/ALTERNATES/s615/0_01HNYZE5FMMGR0XAZGVDJH89SS.jpg"];
+    
+    let paragraphs =["The western black rhinoceros (Diceros bicornis longipes) is a subspecies of the black rhinoceros that was declared extinct by the International Union for Conservation of Nature (IUCN) in 2011. It was native to the savannas and grasslands of western and central Africa, particularly in countries such as Cameroon, Chad, and Nigeria.","The western black rhinoceros was a herbivorous animal that primarily fed on a variety of vegetation, including leaves, shoots, fruits, and branches. It had a prehensile upper lip that allowed it to grasp and manipulate vegetation effectively. The diet of the western black rhino varied depending on the season and availability of food sources in its habitat.","The word “longipes” is of Latin origin, combining longus (“far, long”) and pēs (“foot”). This refers to the subspecies’ long distal limb segment, one of many special characteristics of the subspecies. Other distinct features of the western black rhino included the square based horn, first mandibular premolar retained in the adults, simple formed crochet of the maxillary premolar, and premolars commonly possessed crista.","The western black rhinoceros was a solitary animal, typically only coming together with other rhinos for mating purposes. It had a gestation period of approximately 15 months, after which a single calf was born. The calf would stay with its mother for up to three years before becoming independent."];
+    let para=$state(paragraphs[0]);
+    let counter = $state(1);
+    let headings = ["Area of Origin","Diet","Physical Characteristics","Behavior and Reproduction"];
+
+    let activeCard = 1;
+    let animating = "";
+    
+    let subhead = $state(headings[0]);
+    function increase(){
+        if(counter===4){
+            counter=0;
+        }
+        counter+= 1;
+        para=paragraphs[counter-1];
+        
+        subhead = headings[counter-1];
+        toggleCards();
+    }
+    function decrease(){
+        if(counter===1){
+            counter=5;
+        }
+        counter -= 1 ;
+        para=paragraphs[counter-1];
+        subhead = headings[counter-1];
+        toggleCards();
+    }
+
+    function toggleCards() {
+        if (activeCard === 1) {
+            animating = "card1-push card2-bring";
+            activeCard = 2;
+        } else {
+            animating = "card2-push card1-bring";
+            activeCard = 1;
+        }
+        
+        setTimeout(() => animating = "", 1500);
+    }
+</script>
 
 
 <div class="content">
@@ -9,27 +53,32 @@
             </p>
         </h1>
         <h2 class="subheading">
-            <slot name="subheading">
+            
                 {subhead}
-            </slot>
+            
         </h2>
-        <slot>
+        
             <p class="para">
                 {para}
             </p>
-        </slot>
+        
         <div class="slider">
-            <button class="prev" on:click={decrease}> <span class="material-symbols-outlined">
+            <button class="prev" onclick={decrease}> <span class="material-symbols-outlined">
 arrow_back_ios
 </span> </button>
             <slot class="count"> {counter}/4 </slot>
-            <button class="next" on:click={increase}> <span class="material-symbols-outlined">
+            <button class="next" onclick={increase}> <span class="material-symbols-outlined">
 arrow_forward_ios
 </span> </button>
             
         </div>
     </div>
-    <div class="photos"><img class="rhino" src={src} alt=""></div>
+    <div class="photos">
+        <img class="cards {animating.includes('card1-push')?'animate-pushBack':''}{animating.includes('card1-bring')?'animate-bringForward':''}" id="card1" src={cards[0]} alt="">
+        <img class="cards {animating.includes('card2-push')?'animate-pushBack':''}{animating.includes('card2-bring')?'animate-bringForward':''}" id="card2" src={cards[1]} alt="">
+        <img id="card3" src={cards[2]} alt="" class="cards">
+        <img id="card4" src={cards[3]} alt="" class="cards">
+    </div>
 </div>
 
 <style>
@@ -44,12 +93,10 @@ arrow_forward_ios
         font-display: swap;
     }
     .content {
-        width: 100vw;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        margin: 10px;
         padding: 10px;
         gap: 5px;
     }
@@ -91,14 +138,53 @@ arrow_forward_ios
         height: 60vh;
         width: 30vw;
         padding: 10px;
+        position: relative;
     }
-    .rhino
+    .cards
     {
-        max-width: 100%;
-        max-height: 100%;
+        height: 60vh;
+        width: 40vw;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         object-fit: cover;
+        position: absolute;
+    }
+    @keyframes pushBack {
+       0% { transform: translateX(-20px) translateY(10px) rotate(-5deg) scale(1); }
+       50% { transform: translateX(-80px) translateY(150px) rotate(-45deg) scale(0.3); }
+       100% { transform: translateX(-20px) translateY(10px) rotate(-5deg) scale(1); z-index: 0;
+    }
+   }
+   @keyframes bringForward {
+       0% { transform: translateX(0px) translateY(0px) scale(1); }
+       50% { transform: translateX(40px) translateY(-50px) rotate(15deg) scale(1.05); }
+       100% { transform: translateX(20px) translateY(-10px) rotate(5deg) scale(1); z-index: 1;
+    }
+}
+
+.animate-pushBack{ animation: pushBack 1.5s ease-in-out forwards;}
+.animate-bringForward{ animation: bringForward 1.5s ease-in-out forwards;}
+    #card1 {
+        transform: translateX(-20px) translateY(10px) rotate(-5deg);
+        z-index: 1;
+        
+    }
+    #card2 {
+        transform: translateX(20px) translateY(-10px) rotate(5deg);
+        z-index: 0;
+        
+    }
+
+    #card3 {
+        transform: translateX(20px) translateY(-10px) rotate(15deg) scale(0.9);
+        z-index: -1;
+        
+    }
+
+    #card4 {
+        transform: translateX(20px) translateY(-10px) rotate(25deg) scale(0.9);
+        z-index: -2;
+        
     }
     .slider {
         display: flex;
@@ -126,23 +212,3 @@ arrow_forward_ios
         color: yellow;
     }
 </style>
-
-<script>
-    let src="https://wildlifevagabond.com/wp-content/uploads/2023/08/IMG_1376-2-Edit-2.jpg";
-    let paragraphs =["The western black rhinoceros (Diceros bicornis longipes) is a subspecies of the black rhinoceros that was declared extinct by the International Union for Conservation of Nature (IUCN) in 2011. It was native to the savannas and grasslands of western and central Africa, particularly in countries such as Cameroon, Chad, and Nigeria.","The western black rhinoceros was a herbivorous animal that primarily fed on a variety of vegetation, including leaves, shoots, fruits, and branches. It had a prehensile upper lip that allowed it to grasp and manipulate vegetation effectively. The diet of the western black rhino varied depending on the season and availability of food sources in its habitat."];
-    let para=paragraphs[0];
-    let counter = 1;
-    let headings = ["Area of Origin","Diet"];
-    let subhead = headings[0];
-    function increase(){
-        counter = 2;
-        para=paragraphs[counter-1];
-        
-        subhead = headings[counter-1];
-    }
-    function decrease(){
-        counter = 1 ;
-        para=paragraphs[counter-1];
-        subhead = headings[counter-1];
-    }
-</script>
