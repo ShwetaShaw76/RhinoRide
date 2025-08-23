@@ -1,16 +1,17 @@
 <script>
     import Banner from "./lib/Banner.svelte";
     import Content from "./lib/content.svelte";
-    
+    import Endangered from "./lib/endangered.svelte";
 </script>
 
-<head>
+<svelte:head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     
 
-</head>
+</svelte:head>
 
 <main>
     <Banner />
     <Content />
+    <Endangered />
 </main>

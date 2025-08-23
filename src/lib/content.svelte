@@ -6,13 +6,15 @@
     let para=$state(paragraphs[0]);
     let counter = $state(1);
     let headings = ["Area of Origin","Diet","Physical Characteristics","Behavior and Reproduction"];
-
+    let count=1;
+    let visible = $state("none");
     let activeCard = 1;
     let animating = "";
     
     let subhead = $state(headings[0]);
     function increase(){
         if(counter===4){
+            count=4;
             counter=0;
         }
         counter+= 1;
@@ -42,6 +44,9 @@
         
         setTimeout(() => animating = "", 1500);
     }
+   if(count==4){
+    showButton=true;
+   }
 </script>
 
 
@@ -79,7 +84,11 @@ arrow_forward_ios
         <img id="card3" src={cards[2]} alt="" class="cards">
         <img id="card4" src={cards[3]} alt="" class="cards">
     </div>
+    
 </div>
+<button class="play {showButton?'visible':'hidden'}">
+        Ready to play with Squishy the Rhino? 
+    </button>
 
 <style>
     @font-face {
@@ -210,5 +219,43 @@ arrow_forward_ios
     .prev:hover, .next:hover {
         background-color: #28882d;
         color: yellow;
+    }
+    .play{
+        display: block;
+        margin: 20px auto;
+        background-color: orange;
+        border: none;
+        color: white;
+        padding: 15px 30px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 2rem;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+    }
+    @keyframes shake{
+        0% { transform: translate(1px, 1px) rotate(0deg); }
+        10% { transform: translate(-1px, -2px) rotate(-1deg); }
+        20% { transform: translate(-3px, 0px) rotate(1deg); }
+        30% { transform: translate(3px, 2px) rotate(0deg); }
+        40% { transform: translate(1px, -1px) rotate(1deg); }
+        50% { transform: translate(-1px, 2px) rotate(-1deg); }
+        60% { transform: translate(-3px, 1px) rotate(0deg); }
+        70% { transform: translate(3px, 1px) rotate(-1deg); }
+        80% { transform: translate(-1px, -1px) rotate(1deg); }
+        90% { transform: translate(1px, 2px) rotate(0deg); }
+        100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+    .play:hover {
+        background-color: darkorange;
+        color: yellow;
+        animation: shake 0.5s ease-in-out infinite;
+    }
+    .hidden{
+        display:none;
+    }
+    .visible{
+        display:block;
     }
 </style>
