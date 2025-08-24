@@ -1,7 +1,5 @@
 
 <script>
-    import { onMount } from 'svelte';
-
     
 
     let cards = ["https://wildlifevagabond.com/wp-content/uploads/2023/08/IMG_1376-2-Edit-2.jpg","https://images.squarespace-cdn.com/content/v1/5f1ab4309bd4b45e29ec3e4b/1620028456080-SYTABOMMEFAITUXE8F4I/black-rhino-eating.jpeg","https://a-z-animals.com/media/2022/02/shutterstock_1175506429.jpg","https://i2-prod.birminghammail.co.uk/incoming/article28580361.ece/ALTERNATES/s615/0_01HNYZE5FMMGR0XAZGVDJH89SS.jpg"];
@@ -20,8 +18,11 @@
     let subhead = $state(headings[0]);
     function increase(){
         console.log(card1);
+        if(counter==3){
+            visible="block";
+        }
         if(counter===4){
-            count=4;
+            
             counter=0;
         }
         counter+= 1;
@@ -100,9 +101,11 @@ arrow_forward_ios
   </div>
     
 </div>
-<button class="play">
+<a href="/Squishy">
+<button class="play {visible.includes("block") ? 'visible' : 'hidden'} ">
         Ready to play with Squishy the Rhino? 
     </button>
+    </a>
 
 <style>
     @font-face {

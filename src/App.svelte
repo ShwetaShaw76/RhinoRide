@@ -1,17 +1,13 @@
 <script>
-    import Banner from "./lib/Banner.svelte";
-    import Content from "./lib/content.svelte";
-    import Endangered from "./lib/endangered.svelte";
+    import {Router, link, Route} from 'svelte-routing';
+    import Home from './Home.svelte';
+    import Squishy from './Squishy.svelte';
+
+    export let url ="";
 </script>
-
-<svelte:head>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-    
-
-</svelte:head>
-
-<main>
-    <Banner />
-    <Content />
-    <Endangered />
-</main>
+<Router {url}>
+  <div>
+    <Route path="/Squishy"><Squishy /></Route>
+    <Route path="/"><Home /></Route>
+  </div>
+</Router>
