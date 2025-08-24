@@ -1,5 +1,9 @@
 
 <script>
+    import { onMount } from 'svelte';
+
+    
+
     let cards = ["https://wildlifevagabond.com/wp-content/uploads/2023/08/IMG_1376-2-Edit-2.jpg","https://images.squarespace-cdn.com/content/v1/5f1ab4309bd4b45e29ec3e4b/1620028456080-SYTABOMMEFAITUXE8F4I/black-rhino-eating.jpeg","https://a-z-animals.com/media/2022/02/shutterstock_1175506429.jpg","https://i2-prod.birminghammail.co.uk/incoming/article28580361.ece/ALTERNATES/s615/0_01HNYZE5FMMGR0XAZGVDJH89SS.jpg"];
     
     let paragraphs =["The western black rhinoceros (Diceros bicornis longipes) is a subspecies of the black rhinoceros that was declared extinct by the International Union for Conservation of Nature (IUCN) in 2011. It was native to the savannas and grasslands of western and central Africa, particularly in countries such as Cameroon, Chad, and Nigeria.","The western black rhinoceros was a herbivorous animal that primarily fed on a variety of vegetation, including leaves, shoots, fruits, and branches. It had a prehensile upper lip that allowed it to grasp and manipulate vegetation effectively. The diet of the western black rhino varied depending on the season and availability of food sources in its habitat.","The word “longipes” is of Latin origin, combining longus (“far, long”) and pēs (“foot”). This refers to the subspecies’ long distal limb segment, one of many special characteristics of the subspecies. Other distinct features of the western black rhino included the square based horn, first mandibular premolar retained in the adults, simple formed crochet of the maxillary premolar, and premolars commonly possessed crista.","The western black rhinoceros was a solitary animal, typically only coming together with other rhinos for mating purposes. It had a gestation period of approximately 15 months, after which a single calf was born. The calf would stay with its mother for up to three years before becoming independent."];
@@ -8,11 +12,14 @@
     let headings = ["Area of Origin","Diet","Physical Characteristics","Behavior and Reproduction"];
     let count=1;
     let visible = $state("none");
-    let activeCard = 1;
-    let animating = "";
+    let activeCard = 0;
+    let animating = $state("");
+    let card1 = $state()
+    let zClasses = ["z-top","z-mid","z-low","z-back"];
     
     let subhead = $state(headings[0]);
     function increase(){
+        console.log(card1);
         if(counter===4){
             count=4;
             counter=0;
@@ -34,19 +41,21 @@
     }
 
     function toggleCards() {
-        if (activeCard === 1) {
-            animating = "card1-push card2-bring";
-            activeCard = 2;
-        } else {
-            animating = "card2-push card1-bring";
-            activeCard = 1;
-        }
+        animating = `card${activeCard + 1}-push card${(activeCard + 1)%cards.length + 1}-bring`;
+
+        activeCard = (activeCard + 1) % cards.length;
         
-        setTimeout(() => animating = "", 1500);
+        setTimeout(() =>{
+         animating = "";
+         zClasses= rotateArray(zClasses); 
+        },1500);
     }
-   if(count==4){
-    showButton=true;
-   }
+
+    function rotateArray(arr) {
+    let newArr = [...arr]; 
+    newArr.unshift(newArr.pop()); 
+    return newArr;
+    }
 </script>
 
 
@@ -79,14 +88,19 @@ arrow_forward_ios
         </div>
     </div>
     <div class="photos">
-        <img class="cards {animating.includes('card1-push')?'animate-pushBack':''}{animating.includes('card1-bring')?'animate-bringForward':''}" id="card1" src={cards[0]} alt="">
-        <img class="cards {animating.includes('card2-push')?'animate-pushBack':''}{animating.includes('card2-bring')?'animate-bringForward':''}" id="card2" src={cards[1]} alt="">
-        <img id="card3" src={cards[2]} alt="" class="cards">
-        <img id="card4" src={cards[3]} alt="" class="cards">
-    </div>
+    {#each cards as card, i}
+      <img
+        src={card}
+        alt="card"
+        class="cards {zClasses[i]}
+          {animating.includes(`card${i+1}-push`) ? 'animate-pushBack' : ''}
+          {animating.includes(`card${i+1}-bring`) ? 'animate-bringForward' : ''}"
+      />
+    {/each}
+  </div>
     
 </div>
-<button class="play {showButton?'visible':'hidden'}">
+<button class="play">
         Ready to play with Squishy the Rhino? 
     </button>
 
@@ -161,13 +175,13 @@ arrow_forward_ios
     @keyframes pushBack {
        0% { transform: translateX(-20px) translateY(10px) rotate(-5deg) scale(1); }
        50% { transform: translateX(-80px) translateY(150px) rotate(-45deg) scale(0.3); }
-       100% { transform: translateX(-20px) translateY(10px) rotate(-5deg) scale(1); z-index: 0;
+       100% { transform: translateX(-20px) translateY(10px) rotate(-5deg) scale(1); z-index: -1;
     }
    }
    @keyframes bringForward {
        0% { transform: translateX(0px) translateY(0px) scale(1); }
        50% { transform: translateX(40px) translateY(-50px) rotate(15deg) scale(1.05); }
-       100% { transform: translateX(20px) translateY(-10px) rotate(5deg) scale(1); z-index: 1;
+       100% { transform: tranaslteX(20px) translateY(-10px) rotate(5deg) scale(1); z-index: 2;
     }
 }
 
@@ -195,6 +209,19 @@ arrow_forward_ios
         z-index: -2;
         
     }
+    .z-top{
+        z-index: 2;
+    }
+    .z-mid{
+        z-index: 1;
+    }
+    .z-low{
+        z-index: 0;
+    }
+    .z-back{
+        z-index: -1;
+    }
+
     .slider {
         display: flex;
         justify-content: center;
