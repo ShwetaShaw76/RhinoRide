@@ -54,8 +54,8 @@ function playSound() {
         transition: transform forwards;
     }
     button:hover{
-        background: #28882d;
-        color:beige;
+        background: linear-gradient(to bottom,#28882d,#4CAF50);
+        color:red;
         transform: scale(1.1);
     }
     #icon{
