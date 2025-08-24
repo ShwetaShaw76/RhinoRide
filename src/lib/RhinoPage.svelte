@@ -1,4 +1,6 @@
 <script>
+    import { Link } from "svelte-routing";
+
     let paras=["Squishy is eating peacefully,better not disturb him","Squishy is looking for thing that disturbed him","Squishy is constantly staring at you","On no!! Squishy is charging towards you"];
     let src=["https://freegifimg.com/download/rhinos/569905-rhino-free-photo.gif","https://freegifimg.com/download/rhinos/569844-rhino-gif-file-hd.gif","https://freegifimg.com/download/rhinos/569922-rhino-download-hd.gif","https://freegifimg.com/download/rhinos/569817-rhino-hd-image-free.gif"]
     let i=0;
@@ -11,7 +13,7 @@
 </script>
 
 <div class="content">
-       <a href="/"> <button class="return">return Home</button></a>
+       <Link to="/"> <button class="return">return Home</button></Link>
         <div class="container"><p class="para">{paras[i]}</p></div>
         <p class="Clicknotice"><b>(Click on rhino to interact)</b></p>
 </div>

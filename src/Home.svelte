@@ -4,6 +4,11 @@
     import Endangered from "./lib/endangered.svelte";
 
 </script>
+
+<svelte:head>
+    <title>Rhino Ride</title>
+</svelte:head>
+
 <main>
     <Banner />
     <Content />
