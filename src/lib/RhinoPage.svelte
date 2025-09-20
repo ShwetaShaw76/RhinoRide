@@ -5,39 +5,74 @@
     let mins = parseInt(time.split(":")[1]);
     let paras;
     let src;
-
-    if(hour>22 || hour<9){
+    let i=0;
+    let video;
+    let c,im;
+    if(hour>22 || hour<8){
         paras=["Squishy is sleeping,better not disturb him","Squishy is having a dream of jumping on a trampoline","Squishy is also dreaming about his mother in his sleep","Squishy is waking up from his sleep in drowsy state"];
         src=["https://freegifimg.com/download/rhinos/569833-rhino-free-transparent-image-hq.gif","https://freegifimg.com/download/rhinos/569864-rhino-free-photo.gif","https://freegifimg.com/download/rhinos/569824-rhino-hq-image-free.gif","https://freegifimg.com/download/rhinos/569913-rhino-free-transparent-image-hd.gif"]
+        video="https://youtube.com/shorts/XSHjG5IP2VQ?si=WJOb7xh9ax1PXrU6";
+        c="return-alt";
+        im="content-alt";
     }
     else{
     paras=["Squishy is eating peacefully,better not disturb him","Squishy is looking for thing that disturbed him","Squishy is constantly staring at you","On no!! Squishy is charging towards you"];
-    src=["https://freegifimg.com/download/rhinos/569905-rhino-free-photo.gif","https://freegifimg.com/download/rhinos/569844-rhino-gif-file-hd.gif","https://freegifimg.com/download/rhinos/569922-rhino-download-hd.gif","https://freegifimg.com/download/rhinos/569817-rhino-hd-image-free.gif"]
+    src=["https://freegifimg.com/download/rhinos/569905-rhino-free-photo.gif","https://freegifimg.com/download/rhinos/569844-rhino-gif-file-hd.gif","https://freegifimg.com/download/rhinos/569922-rhino-download-hd.gif","https://freegifimg.com/download/rhinos/569817-rhino-hd-image-free.gif"];
+    video="https://www.youtube.com/shorts/Yl271V-0s5M";
+    c="return";
+    im="content";
     }
-    let i=0;
+    
     function changeImage(){
         i+=1;
         if(i==4){
-            window.open("https://www.youtube.com/shorts/Yl271V-0s5M")
+            window.open(video,'_blank');
+            i=0;
         }
     }
 </script>
 
-<div class="content">
-       <Link to="/"> <button class="return">return Home</button></Link>
+<div class={im}>
+       <Link to="/"> <button class={c}>return Home</button></Link>
         <div class="container"><p class="para">{paras[i]}</p></div>
         <p class="Clicknotice"><b>(Click on rhino to interact)</b></p>
-</div>
-<div class="rhino" onclick={changeImage}>
+        <div class="rhino" onclick={changeImage}>
     <img class="image" src={src[i]} alt="rhino image">
 </div>
+</div>
+
 
 <style>
+    
     .content{
         display:flex;
         flex-direction:column;
         justify-content:center;
         align-items:center;
+    }
+    .content-alt{
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        margin-top:0;
+        background: url("https://vinsweb.org/wp-content/uploads/2020/04/AtHome-NightSky-1080x810-1.jpg");
+        color: white;
+        min-height: 100vh;
+    }
+    .return-alt {
+        background: url("https://vinsweb.org/wp-content/uploads/2020/04/AtHome-NightSky-1080x810-1.jpg");
+        border: none;
+        color: white;
+        padding: 10px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 2rem;
+        margin: 3px 3px;
+        cursor: pointer;
+        border-radius: 12px;
+        transition: transform forwards;
     }
     .return{
         background:#4CAF50;
@@ -94,5 +129,6 @@
         border: 5px solid brown;
         border-radius: 15px;
         background-color: white;
+        padding: 2vh 2vw;
     }
 </style>

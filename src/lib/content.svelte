@@ -127,6 +127,7 @@ arrow_forward_ios
         align-items: center;
         padding: 10px;
         gap: 5px;
+        margin-top:10vh;
     }
     .para{
         padding: 10px;
